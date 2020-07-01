@@ -7,10 +7,15 @@
  */
 
 import React from 'react';
-import CreateWorkout from 'LiftApp/src/views/CreateWorkout';
+import {Provider as PaperProvider} from 'react-native-paper';
+import Content from 'LiftApp/src/components/Content';
 
 const App: () => React$Node = () => {
-  return <CreateWorkout />;
+  return (
+    <PaperProvider>
+      <Content />
+    </PaperProvider>
+  );
 };
 
 export default App;
