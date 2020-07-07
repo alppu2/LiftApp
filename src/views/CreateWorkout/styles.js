@@ -17,12 +17,17 @@ export default StyleSheet.create({
   secondaryItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginHorizontal: 30,
-    padding: 15,
+    marginHorizontal: 25,
+    padding: 7.5,
     elevation: 4,
   },
-  setNumber: {
+  setId: {
+    marginLeft: 15,
     marginRight: 30,
+  },
+  setDetails: {
+    marginLeft: 5,
+    marginRight: 20,
   },
   addIcon: {
     margin: 0,
