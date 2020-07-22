@@ -1,11 +1,15 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
-  listItem: {
+  listItemContainer: {
     marginTop: 30,
     marginHorizontal: 20,
     padding: 15,
-    elevation: 6,
+    elevation: 10,
+    flexDirection: 'row',
+  },
+  listItemHeader: {
+    flex: 1,
   },
   secondaryItem: {
     flexDirection: 'row',
@@ -15,15 +19,23 @@ export default StyleSheet.create({
     elevation: 4,
   },
   setId: {
+    flex: 1,
     marginLeft: 15,
-    marginRight: 30,
+  },
+  setDetailIcon: {
+    flex: 1,
   },
   setDetails: {
-    marginLeft: 5,
-    marginRight: 20,
+    flex: 2,
+  },
+  editIcon: {
+    flex: 1,
+  },
+  deleteIcon: {
+    flex: 1,
   },
   addIcon: {
     margin: 0,
-    marginRight: 10,
+    marginRight:10,
   },
 });

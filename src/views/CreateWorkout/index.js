@@ -41,10 +41,27 @@ const data = [
       },
     ],
   },
+  {
+    id: 3,
+    movement: 'test',
+    variable: 'test',
+    sets: [
+      {
+        id: 1,
+        reps: 12,
+        weight: 10,
+      },
+      {
+        id: 2,
+        reps: 11,
+        weight: 10,
+      },
+    ],
+  },
 ];
 
 const CreateWorkout = () => {
-  return <CreateWorkoutComponent workoutData={data} />;
+  return <CreateWorkoutComponent data={data} />;
 };
 
 export default CreateWorkout;
