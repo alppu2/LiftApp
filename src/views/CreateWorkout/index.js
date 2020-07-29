@@ -6,6 +6,7 @@ const data = [
     id: 1,
     movement: 'Bench press',
     variable: 'Barbell',
+    showSets: true,
     sets: [
       {
         id: 1,
@@ -28,6 +29,7 @@ const data = [
     id: 2,
     movement: 'Flies',
     variable: 'Dumbells',
+    showSets: true,
     sets: [
       {
         id: 1,
@@ -45,6 +47,7 @@ const data = [
     id: 3,
     movement: 'test',
     variable: 'test',
+    showSets: true,
     sets: [
       {
         id: 1,

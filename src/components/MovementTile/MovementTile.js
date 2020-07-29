@@ -13,7 +13,7 @@ import TextInputMask from 'react-native-text-input-mask';
 import styles from './styles.js';
 import {map, without, pullAt, remove, forEach, set} from 'lodash';
 
-const MovementTile = ({data, deleteMovement}) => {
+const MovementTile = ({data, deleteMovement, toggleShowSets}) => {
   const [movementData, setMovementData] = useState(data);
 
   useEffect(() => {
@@ -71,86 +71,94 @@ const MovementTile = ({data, deleteMovement}) => {
 
   return (
     <>
-      <Surface style={styles.listItemContainer}>
-        <View style={styles.listItemHeader}>
-          <Subheading>{movementData.movement}</Subheading>
-          <Caption>{movementData.variable}</Caption>
-        </View>
-        <IconButton icon="close" onPress={() => deleteMovement(movementData.id)} />
-      </Surface>
-      <FlatList
-        data={movementData.sets}
-        keyExtractor={item => String(item.id)}
-        renderItem={({item}) => (
-          <Surface style={styles.secondaryItem}>
-            <>
-              <Paragraph style={styles.setId}>{item.id}</Paragraph>
-              <IconButton style={styles.setDetailIcon} icon="weight-kilogram" />
-              {!item.editing && (
-                <Paragraph style={styles.setDetails}>{item.weight}</Paragraph>
-              )}
-              {item.editing && (
-                <TextInput
-                  style={styles.setDetails}
-                  mode="outlined"
-                  dense={true}
-                  value={movementData.sets[item.id - 1].weight}
-                  keyboardType="number-pad"
-                  onChangeText={text =>
-                    handleChangeSetData(text, item.id, 'weight')
-                  }
-                  render={props => <TextInputMask {...props} mask="[0000]" />}
-                />
-              )}
-              <IconButton style={styles.setDetailIcon} icon="counter" />
-              {!item.editing && (
-                <>
-                  <Paragraph style={styles.setDetails}>{item.reps}</Paragraph>
-                  <IconButton
-                    style={styles.editIcon}
-                    icon="pencil-outline"
-                    onPress={() => handleEditToggle(item.id)}
-                  />
-                </>
-              )}
-              {item.editing && (
-                <>
+      <TouchableHighlight 
+        onPress={() => toggleShowSets(movementData.id)}
+        activeOpacity={0.75}
+        underlayColor="#e6e6eb"
+      >
+        <Surface style={styles.listItemContainer}>
+          <View style={styles.listItemHeader}>
+            <Subheading>{movementData.movement}</Subheading>
+            <Caption>{movementData.variable}</Caption>
+          </View>
+          <IconButton icon="close" onPress={() => deleteMovement(movementData.id)} />
+        </Surface>
+      </TouchableHighlight>
+      {movementData.showSets && (<>
+        <FlatList
+          data={movementData.sets}
+          keyExtractor={item => String(item.id)}
+          renderItem={({item}) => (
+            <Surface style={styles.secondaryItem}>
+              <>
+                <Paragraph style={styles.setId}>{item.id}</Paragraph>
+                <IconButton style={styles.setDetailIcon} icon="weight-kilogram" />
+                {!item.editing && (
+                  <Paragraph style={styles.setDetails}>{item.weight}</Paragraph>
+                )}
+                {item.editing && (
                   <TextInput
                     style={styles.setDetails}
                     mode="outlined"
                     dense={true}
-                    value={movementData.sets[item.id - 1].reps}
+                    value={movementData.sets[item.id - 1].weight}
                     keyboardType="number-pad"
                     onChangeText={text =>
-                      handleChangeSetData(text, item.id, 'reps')
+                      handleChangeSetData(text, item.id, 'weight')
                     }
-                    render={props => <TextInputMask {...props} mask="[000]" />}
+                    render={props => <TextInputMask {...props} mask="[0000]" />}
                   />
-                  <IconButton
-                    style={styles.editIcon}
-                    icon="check"
-                    onPress={() => handleEditToggle(item.id)}
-                  />
-                </>
-              )}
-              <IconButton
-                style={styles.deleteIcon}
-                icon="close"
-                onPress={() => handleRemoveSet(item.id)}
-              />
-            </>
+                )}
+                <IconButton style={styles.setDetailIcon} icon="counter" />
+                {!item.editing && (
+                  <>
+                    <Paragraph style={styles.setDetails}>{item.reps}</Paragraph>
+                    <IconButton
+                      style={styles.editIcon}
+                      icon="pencil-outline"
+                      onPress={() => handleEditToggle(item.id)}
+                    />
+                  </>
+                )}
+                {item.editing && (
+                  <>
+                    <TextInput
+                      style={styles.setDetails}
+                      mode="outlined"
+                      dense={true}
+                      value={movementData.sets[item.id - 1].reps}
+                      keyboardType="number-pad"
+                      onChangeText={text =>
+                        handleChangeSetData(text, item.id, 'reps')
+                      }
+                      render={props => <TextInputMask {...props} mask="[000]" />}
+                    />
+                    <IconButton
+                      style={styles.editIcon}
+                      icon="check"
+                      onPress={() => handleEditToggle(item.id)}
+                    />
+                  </>
+                )}
+                <IconButton
+                  style={styles.deleteIcon}
+                  icon="close"
+                  onPress={() => handleRemoveSet(item.id)}
+                />
+              </>
+            </Surface>
+          )}
+        />
+        <TouchableHighlight
+          onPress={() => handleAddSet(movementData.id)}
+          activeOpacity={0.75}
+          underlayColor="#e6e6eb">
+          <Surface style={styles.secondaryItem}>
+            <IconButton icon="plus" style={styles.addIcon} />
+            <Paragraph>{'Add set'}</Paragraph>
           </Surface>
-        )}
-      />
-      <TouchableHighlight
-        onPress={() => handleAddSet(movementData.id)}
-        activeOpacity={0.75}
-        underlayColor="#fefefe">
-        <Surface style={styles.secondaryItem}>
-          <IconButton icon="plus" style={styles.addIcon} />
-          <Paragraph>{'Add set'}</Paragraph>
-        </Surface>
-      </TouchableHighlight>
+        </TouchableHighlight>
+      </>)}
     </>
   );
 };
@@ -158,6 +166,7 @@ const MovementTile = ({data, deleteMovement}) => {
 MovementTile.propTypes = {
   data: PropTypes.object,
   deleteMovement: PropTypes.func,
+  toggleShowSets: PropTypes.func,
 };
 
 export default MovementTile;
